@@ -10,15 +10,15 @@ import ru.kata.spring.boot_security.demo.service.UserService;
 @RequestMapping("/admin")
 public class AdminController {
 
-    private final UserService us;
+    private final UserService userService;
 
-    public AdminController(UserService us) {
-        this.us = us;
+    public AdminController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping
     public String admin(Model model) {
-        model.addAttribute("users", us.getAllUsers());
+        model.addAttribute("users", userService.getAllUsers());
         return "admin";
     }
 
@@ -30,25 +30,25 @@ public class AdminController {
 
     @PostMapping
     public String create(@ModelAttribute("user") User user) {
-        us.save(user);
+        userService.save(user);
         return "redirect:/admin";
     }
 
     @GetMapping("/{id}/edit")
     public String edit(Model model, @PathVariable("id") int id) {
-        model.addAttribute("user", us.getUser(id));
+        model.addAttribute("user", userService.getUser(id));
         return "edit";
     }
 
     @PatchMapping("/{id}")
     public String update(@ModelAttribute("user") User user, @PathVariable("id") int id) {
-        us.update(id, user);
+        userService.update(id, user);
         return "redirect:/admin";
     }
 
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") int id) {
-        us.delete(id);
+        userService.delete(id);
         return "redirect:/admin";
     }
 }

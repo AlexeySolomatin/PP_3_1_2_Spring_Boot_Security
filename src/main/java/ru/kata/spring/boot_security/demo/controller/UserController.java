@@ -10,15 +10,15 @@ import java.security.Principal;
 @RequestMapping("/user")
 public class UserController {
 
-    private final UserService us;
+    private final UserService userService;
 
-    public UserController(UserService us) {
-        this.us = us;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping
     public String user(Model model, Principal principal) {
-        model.addAttribute("user", us.getUserByName(principal.getName()));
+        model.addAttribute("user", userService.getUserByName(principal.getName()));
         return "user";
     }
 }
